@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pagina web</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav>
+        
+        <input type="checkbox" id="toggle">
+        <div class="logo">
+            nombre de empresa
+        </div>
+        <ul class="list">
+            <li><a href="#">inicio</a> </li>
+            <li><a href="#">nosotros</a> </li>
+            <li><a href="#">blog</a> </li>
+            <li><a href="#">portafolio</a> </li>
+            <li><a href="#">conctatos</a> </li>
+        </ul>
+        <label for="toggle" class="icon-bars">
+            <div class="line"></div>    
+            <div class="line"></div>
+            <div class="line"></div>
+        </label>
+        <section id="gallery">
+        <div class="gallery-container">
+            <figure class="gallery-item">
+                <img src="https://www.espai.es/blog/wp-content/uploads/2023/10/slider-dinamico-imagen1-japon.jpg" alt="Imagen 1">
+    <!--             <figcaption>Descripción de la imagen 1</figcaption> -->
+            </figure>
+            <figure class="gallery-item">
+                <img src="https://www.espai.es/blog/wp-content/uploads/2023/10/slider-dinamico-imagen2-japon.jpg" alt="Imagen 2">
+    <!--             <figcaption>Descripción de la imagen 2</figcaption> -->
+            </figure>
+            <figure class="gallery-item">
+                <img src="https://www.espai.es/blog/wp-content/uploads/2023/10/slider-dinamico-imagen3-japon.jpg" alt="Imagen 3">
+    <!--             <figcaption>Descripción de la imagen 3</figcaption> -->
+            </figure>
+        </div>
+        </div>
+    </div>    
+    </nav>
+    <nav class="gallery-navigation">
+        <button class="nav-button prev-button"><span>&#60;</span></button>
+        <button class="nav-button next-button"><span>&#62;</span></button>
+    </nav>
+</section>
+    <script>
+let currentIndex = 0;
+
+document.querySelector('.prev-button').addEventListener('click', () => {
+    navigate(-1);
+});
+
+document.querySelector('.next-button').addEventListener('click', () => {
+    navigate(1);
+});
+
+function navigate(direction) {
+    const galleryContainer = document.querySelector('.gallery-container');
+    const totalImages = document.querySelectorAll('.gallery-item').length;
+    
+    currentIndex = (currentIndex + direction + totalImages) % totalImages;
+    const offset = -currentIndex * 100;
+    
+    galleryContainer.style.transform = `translateX(${offset}%)`;
+}
+
+//AUTOPLAY
+let autoplayInterval = null;
+
+function startAutoplay(interval) {
+    stopAutoplay();  // Detiene cualquier autoplay anterior para evitar múltiples intervalos.
+    autoplayInterval = setInterval(() => {
+        navigate(1);  // Navega a la siguiente imagen cada intervalo de tiempo.
+    }, interval);
+}
+
+function stopAutoplay() {
+    clearInterval(autoplayInterval);
+}
+
+// Iniciar autoplay con un intervalo de 3 segundos.
+startAutoplay(3000);
+
+// Opcional: Detener autoplay cuando el usuario interactúa con los botones de navegación.
+document.querySelectorAll('.nav-button').forEach(button => {
+    button.addEventListener('click', stopAutoplay);
+});
+
+</script> 
+</body>
+</html>
+        
