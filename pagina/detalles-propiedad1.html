@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de la Propiedad 1</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Encuentra tu hogar</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="pagina.html#inicio">Inicio</a></li>
+            <li><a href="pagina.html#propiedades">Propiedades</a></li>
+            <li><a href="pagina.html#sobre-nosotros">Sobre Nosotros</a></li>
+            <li><a href="pagina.html#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Casa 1</h2>
+            <img src="casa 1.webp" alt="Casa 1">
+            <p>Es una residencia ubicada a las afueras de caracas en la avenida teresa de la parra,posee una cantidad de 1 cocina
+                4 habitaciones,2 baños,1 sala y 1 garage.
+            </p>
+        </section>
+        <section>
+            <h2>Opciones de Compra</h2>
+            <form>
+                <label for="pago-completo">Pago Completo: $450,000</label>
+                <input type="radio" id="pago-completo" name="opcion-pago" value="completo" checked>
+                <br>
+                <label for="pago-mensual">Pago por Meses:</label>
+                <input type="radio" id="pago-mensual" name="opcion-pago" value="mensual">
+                <br>
+                <div id="plan-mensual" style="display: none;">
+                    <label for="numero-meses">Número de Meses:</label>
+                    <input type="number" id="numero-meses" name="numero-meses" min="1" value="12">
+                    <br>
+                    <label for="precio-mensual">Precio Mensual: $<span id="precio-mensual"></span></label>
+                </div>
+                <br>
+                <button type="button" onclick="procesarCompra()">Procesar Compra</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Venta de Casas</p>
+    </footer>
+    <script>
+        const precioTotal = 450000;
+
+        document.getElementById('pago-mensual').addEventListener('change', function() {
+            document.getElementById('plan-mensual').style.display = 'block';
+            calcularPagoMensual();
+        });
+
+        document.getElementById('pago-completo').addEventListener('change', function() {
+            document.getElementById('plan-mensual').style.display = 'none';
+        });
+
+        document.getElementById('numero-meses').addEventListener('input', calcularPagoMensual);
+
+        function calcularPagoMensual() {
+            const numeroMeses = document.getElementById('numero-meses').value;
+            const precioMensual = (precioTotal / numeroMeses).toFixed(2);
+            document.getElementById('precio-mensual').innerText = precioMensual;
+        }
+
+        function procesarCompra() {
+            const opcionPago = document.querySelector('input[name="opcion-pago"]:checked').value;
+            let mensaje = 'Has seleccionado el pago completo de $200,000.';
+            if (opcionPago === 'mensual') {
+                const numeroMeses = document.getElementById('numero-meses').value;
+                const precioMensual = (precioTotal / numeroMeses).toFixed(1);
+                mensaje = `Has seleccionado el pago por meses. Número de meses: ${numeroMeses}. Pago mensual: $${precioMensual}.`;
+            }
+            alert(mensaje);
+        }
+
+        // Inicializar el valor del precio mensual en caso de que se seleccione la opción de pago mensual por defecto
+        calcularPagoMensual();
+    </script>
+</body>
+</html>
+
